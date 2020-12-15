@@ -22,9 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ProductControllerTest {
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
     private ProductRepository productRepository;
 
     @Test
