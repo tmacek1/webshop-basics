@@ -1,27 +1,20 @@
 package com.assignment.webshop.basics.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.HashSet;
-import java.util.Set;
 
 @Validated
 @Entity
+@SequenceGenerator(name = "customer_seq", initialValue = 1, allocationSize = 100)
 @Table(name = "customer")
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
+@Data
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
     private long id;
 
     @Column(name = "first_name")
@@ -34,7 +27,7 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Order> orders = new HashSet<>();
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Order> orders = new HashSet<>();
 
 }

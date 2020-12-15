@@ -1,10 +1,7 @@
 package com.assignment.webshop.basics.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -13,10 +10,7 @@ import javax.validation.constraints.Min;
 @Validated
 @Entity
 @Table(name = "webshop_order_item")
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
+@Data
 public class OrderItem {
 
     @Id
@@ -28,9 +22,9 @@ public class OrderItem {
     private int quantity;
 
     @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @MapsId
     @OneToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;

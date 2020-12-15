@@ -1,9 +1,6 @@
 package com.assignment.webshop.basics.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -15,16 +12,14 @@ import java.util.List;
 
 @Validated
 @Entity
+@SequenceGenerator(name = "webshop_order_seq", initialValue = 1, allocationSize = 100)
 @Table(name = "webshop_order")
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
+@Data
 public class Order {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "webshop_order_seq")
     private long id;
 
     @Enumerated(EnumType.STRING)
@@ -41,13 +36,13 @@ public class Order {
     @Column(name = "total_price_eur")
     private BigDecimal totalPriceEur;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
-    public enum Status {
+    private enum Status {
         DRAFT, SUBMITTED;
     }
 

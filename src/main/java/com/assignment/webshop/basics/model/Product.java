@@ -1,9 +1,7 @@
 package com.assignment.webshop.basics.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -13,36 +11,36 @@ import java.math.BigDecimal;
 
 @Validated
 @Entity
+@SequenceGenerator(name = "product_seq", initialValue = 1, allocationSize = 100)
 @Table(name = "product")
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
+@Data
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
     private long id;
 
-    @Column(name = "code", unique = true, length = 10)
+    @Column(name = "code", unique = true, length = 10, nullable = false)
     private String code;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @DecimalMin(value = "0.0", inclusive = true)
     @Digits(integer = 6, fraction = 2)
-    @Column(name = "price_hrk")
+    @Column(name = "price_hrk", nullable = false)
     private BigDecimal priceHrk;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "is_available")
+    @Column(name = "is_available", nullable = false)
+    @JsonProperty("is_available")
     private boolean isAvailable;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @PrimaryKeyJoinColumn
-    private OrderItem orderItem;
+//    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @PrimaryKeyJoinColumn
+//    private OrderItem orderItem;
+
 
 }
