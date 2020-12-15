@@ -14,7 +14,11 @@ import java.math.BigDecimal;
 @SequenceGenerator(name = "product_seq", initialValue = 1, allocationSize = 100)
 @Table(name = "product")
 @Data
+@AllArgsConstructor
 public class Product {
+
+    public Product() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
