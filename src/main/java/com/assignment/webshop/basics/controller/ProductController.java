@@ -1,16 +1,19 @@
 package com.assignment.webshop.basics.controller;
 
-import com.assignment.webshop.basics.model.Product;
+import com.assignment.webshop.basics.entity.Product;
+import com.assignment.webshop.basics.model.ProductDTO;
 import com.assignment.webshop.basics.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,31 +24,68 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    ModelMapper modelMapper;
+
+    @GetMapping(value = "/products/{id}")
+    public ResponseEntity<ProductDTO> readProduct(
+            @PathVariable(required = false) long id) {
+
+        Optional<Product> product = productService.getProductById(id);
+        if (product.isPresent()) {
+            ProductDTO productDTO = modelMapper.map(product.get(), ProductDTO.class);
+            return new ResponseEntity<>(productDTO, HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "product id not found"
+            );
+        }
+    }
+
+    @GetMapping(value = "/products")
+    public ResponseEntity<ProductDTO> readProductByCode(
+            @RequestParam(value = "code", required = false) String code) {
+
+        Optional<Product> product = productService.getProductByCode(code);
+        if (product.isPresent()) {
+            ProductDTO productDTO = modelMapper.map(product.get(), ProductDTO.class);
+            return new ResponseEntity<>(productDTO, HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "product code not found"
+            );
+        }
+    }
+
+    @GetMapping(value = "products/all")
+    public ResponseEntity<List<ProductDTO>> readAllProducts() {
+
+        List<Product> readAll = productService.getAllProducts();
+        ArrayList<ProductDTO> result = new ArrayList<>();
+
+        for (Product product : readAll) {
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            result.add(productDTO);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/products")
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
+    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO) {
+
+        Product product = modelMapper.map(productDTO, Product.class);
         Product saveProduct = productService.createProduct(product);
-        return new ResponseEntity<Product>(saveProduct, HttpStatus.CREATED);
+        ProductDTO productResult = modelMapper.map(saveProduct, ProductDTO.class);
+        return new ResponseEntity<>(productResult, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/products")
-    public ResponseEntity<Product> updateProduct(@Valid @RequestBody Product product) {
+    public ResponseEntity<ProductDTO> updateProduct(@Valid @RequestBody ProductDTO productDTO) {
 
+        Product product = modelMapper.map(productDTO, Product.class);
         Product updateProduct = productService.updateProduct(product);
-        return new ResponseEntity<Product>(product, HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping(value = "/products/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Product> readProduct(@PathVariable String code) {
-
-        Optional<Product> product = productService.getProduct(code);
-
-        if (product.isPresent()) {
-            return new ResponseEntity<Product>(product.get(), HttpStatus.OK);
-        } else {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "product not found"
-            );
-        }
+        ProductDTO result = modelMapper.map(updateProduct, ProductDTO.class);
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/products/{id}")
@@ -53,6 +93,5 @@ public class ProductController {
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-
 
 }

@@ -1,6 +1,6 @@
 package com.assignment.webshop.basics.service;
 
-import com.assignment.webshop.basics.model.Product;
+import com.assignment.webshop.basics.entity.Product;
 import com.assignment.webshop.basics.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,7 +18,22 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public Optional<Product> getProduct(String code) {
+    public List<Product> getAllProducts() {
+        List<Product> allProducts = productRepository.findAll();
+        return allProducts;
+    }
+
+    public Optional<Product> getProductById(long id) {
+        Optional<Product> fetchProduct = productRepository.findById(id);
+        if (fetchProduct.isPresent()) {
+            Product getProduct = fetchProduct.get();
+            return Optional.of(getProduct);
+        }
+
+        return Optional.empty();
+    }
+
+    public Optional<Product> getProductByCode(String code) {
         Optional<Product> fetchProduct = productRepository.findByCode(code);
         if (fetchProduct.isPresent()) {
             Product getProduct = fetchProduct.get();
@@ -41,6 +57,7 @@ public class ProductService {
             targetProduct.setName(product.getName());
             targetProduct.setPriceHrk(product.getPriceHrk());
             return productRepository.save(targetProduct);
+
         } else {
             return productRepository.save(product);
         }
@@ -50,7 +67,6 @@ public class ProductService {
     public void deleteProduct(String code) {
         Optional<Product> fetchProduct = productRepository.findByCode(code);
         if (fetchProduct.isPresent()) {
-            log.info("delete id : {}", fetchProduct.get().getId());
             productRepository.deleteById(fetchProduct.get().getId());
         } else {
             throw new ResponseStatusException(

@@ -1,13 +1,11 @@
-package com.assignment.webshop.basics.model;
+package com.assignment.webshop.basics.entity;
 
 
-import lombok.*;
-import org.springframework.validation.annotation.Validated;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 
-@Validated
 @Entity
 @Table(name = "webshop_order_item")
 @Data
@@ -15,11 +13,10 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
-    @Min(0)
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
@@ -27,6 +24,7 @@ public class OrderItem {
 
     @OneToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
     private Product product;
 
 }

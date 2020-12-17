@@ -1,48 +1,49 @@
-package com.assignment.webshop.basics.model;
+package com.assignment.webshop.basics.entity;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
-@Validated
+
 @Entity
-@SequenceGenerator(name = "webshop_order_seq", initialValue = 1, allocationSize = 100)
 @Table(name = "webshop_order")
 @Data
 public class Order {
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "webshop_order_seq")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
 
-    @DecimalMin(value = "0.0", inclusive = true)
     @Digits(integer = 6, fraction = 2)
     @Column(name = "total_price_hrk")
     private BigDecimal totalPriceHrk;
 
-    @DecimalMin(value = "0.0", inclusive = true)
     @Digits(integer = 6, fraction = 2)
     @Column(name = "total_price_eur")
     private BigDecimal totalPriceEur;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> items = new ArrayList<>();
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
 
-    private enum Status {
+    public enum Status {
         DRAFT, SUBMITTED;
     }
 

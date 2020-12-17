@@ -1,6 +1,6 @@
 package com.assignment.webshop.basics;
 
-import com.assignment.webshop.basics.model.Product;
+import com.assignment.webshop.basics.entity.Product;
 import com.assignment.webshop.basics.repository.ProductRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -23,26 +23,32 @@ public class ProductControllerTest {
     @Autowired
     private ProductRepository productRepository;
 
+    public static class TestObjects {
+        public static Product aProduct() {
+            Product product = new Product();
+            product.setCode("1234");
+            product.setName("testProduct");
+            product.setAvailable(true);
+            product.setDescription("testDesc");
+            product.setPriceHrk(new BigDecimal("55"));
+            return product;
+        }
+    }
+
     @Test
     @Order(1)
     public void testSaveProduct() {
 
-        Product product = new Product(
-                1,
-                "1234",
-                "testProduct",
-                new BigDecimal("99.99"),
-                "testDescription",
-                true);
-
-        Product targetProduct = productRepository.saveAndFlush(product);
+        Product targetProduct = productRepository.saveAndFlush(TestObjects.aProduct());
         assertThat(targetProduct.getName()).isEqualTo("testProduct");
     }
 
     @Test
     @Order(2)
     public void testGetProductByCode() {
-        Optional<Product> product = productRepository.findByCode("1234");
+
+        Optional<Product> product = productRepository.findByCode(TestObjects.aProduct().getCode());
+        assertThat(product.isPresent()).isEqualTo(true);
         assertThat(product.get().getName()).isEqualTo("testProduct");
     }
 
@@ -51,13 +57,12 @@ public class ProductControllerTest {
     @Order(3)
     public void testUpdateProduct() {
 
-        Optional<Product> product = productRepository.findByCode("1234");
+        Optional<Product> product = productRepository.findByCode(TestObjects.aProduct().getCode());
+        assertThat(product.isPresent()).isEqualTo(true);
         Product targetProduct = product.get();
         targetProduct.setName("updateProduct");
-
         productRepository.saveAndFlush(targetProduct);
-
-        Optional<Product> updatedProduct = productRepository.findByCode("1234");
+        Optional<Product> updatedProduct = productRepository.findByCode(TestObjects.aProduct().getCode());
         assertThat(updatedProduct.get().getName()).isEqualTo("updateProduct");
     }
 
@@ -65,9 +70,18 @@ public class ProductControllerTest {
     @Order(4)
     public void testDeleteProduct() {
 
-        Optional<Product> product = productRepository.findByCode("1234");
+        Optional<Product> product = productRepository.findByCode(TestObjects.aProduct().getCode());
+        assertThat(product.isPresent()).isEqualTo(true);
         productRepository.deleteById(product.get().getId());
-        Optional<Product> targetProduct = productRepository.findByCode("1234");
+        Optional<Product> targetProduct = productRepository.findByCode(TestObjects.aProduct().getCode());
         assertThat(targetProduct.isPresent()).isEqualTo(false);
     }
+
+
+    // TODO: test get by id / code
+    // TODO: run tests on postgres
+    /*
+    https://spring.io/guides/gs/testing-web/
+     */
+
 }
