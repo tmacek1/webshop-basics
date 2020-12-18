@@ -7,8 +7,11 @@ import com.assignment.webshop.basics.exception.OrderItemException;
 import com.assignment.webshop.basics.repository.OrderItemRepository;
 import com.assignment.webshop.basics.repository.OrderRepository;
 import com.assignment.webshop.basics.repository.ProductRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -23,6 +26,9 @@ public class OrderItemService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     public OrderItem createOrderItem(OrderItem orderItem) throws OrderItemException {
 
@@ -46,5 +52,17 @@ public class OrderItemService {
         return orderItemRepository.save(orderItem);
     }
 
+
+    public void deleteOrderItem(long id) {
+
+        Optional<OrderItem> fetchOrderItem = orderItemRepository.findById(id);
+        if (fetchOrderItem.isPresent()) {
+            orderItemRepository.deleteById(fetchOrderItem.get().getId());
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "order item id not found"
+            );
+        }
+    }
 
 }

@@ -1,15 +1,8 @@
 package com.assignment.webshop.basics.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.util.List;
@@ -40,7 +33,7 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     public enum Status {

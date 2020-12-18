@@ -29,6 +29,7 @@ public class HnbRestClient {
 
         try {
             ResponseEntity<HnbDTO[]> response = restTemplate.exchange(restClientConfig.getBaseUri(), HttpMethod.GET, entity, HnbDTO[].class);
+            log.info("fetch from hnb api: {}", response.getBody());
             return response;
         } catch (RestClientException ex) {
             log.error("failed to contact HNB API: {}", ex.getMessage());

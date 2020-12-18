@@ -36,6 +36,8 @@ public class OrderController {
     @GetMapping(value = "/orders/all")
     public ResponseEntity<List<OrderDTO>> readAllOrders() {
 
+        log.info("get all orders");
+
         List<Order> readAll = orderService.getAllOrders();
         List<OrderDTO> result = new ArrayList<>();
         List<OrderItemJson> orderItemJsonList = new ArrayList<>();
@@ -58,7 +60,9 @@ public class OrderController {
     public ResponseEntity<OrderDTO> readOrder(
             @PathVariable(required = false) long id) {
 
+        log.info("get order by id:{}", id);
         Optional<Order> order = orderService.getOrderById(id);
+
         if (order.isPresent()) {
 
             OrderDTO orderDTO = modelMapper.map(order.get(), OrderDTO.class);
@@ -85,9 +89,10 @@ public class OrderController {
     @PostMapping(value = "/orders")
     public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderDTO orderDTO) {
 
+        log.info("post new order");
         Order order = modelMapper.map(orderDTO, Order.class);
-
         Optional<Order> saveOrder = orderService.createOrder(order);
+
         if (saveOrder.isPresent()) {
 
             OrderDTO returnOrderDTO = modelMapper.map(saveOrder.get(), OrderDTO.class);
@@ -103,6 +108,7 @@ public class OrderController {
     @PutMapping(value = "/orders")
     public ResponseEntity<Order> updateOrder(@Valid @RequestBody Order order) {
 
+        log.info("put new order");
         Optional<Order> updateOrder = orderService.updateOrder(order);
         if (updateOrder.isPresent()) {
             return new ResponseEntity<>(updateOrder.get(), HttpStatus.ACCEPTED);
@@ -113,12 +119,18 @@ public class OrderController {
     }
 
     @DeleteMapping(value = "/orders/{id}")
-    public void deleteOrder() {
-    }
+    public ResponseEntity<HttpStatus> deleteOrder(@PathVariable long id) {
 
+        log.info("delete order by id: {}", id);
+        orderService.deleteOrder(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 
     @PostMapping(value = "/orders/final/{id}")
     public void finalizeOrder(@PathVariable(required = true) long id) {
+
+        log.info("finalize order");
+
         try {
             orderService.finalizeOrder(id);
         } catch (OrderException e) {

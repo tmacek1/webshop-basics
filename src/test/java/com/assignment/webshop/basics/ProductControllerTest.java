@@ -9,6 +9,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -76,12 +77,4 @@ public class ProductControllerTest {
         Optional<Product> targetProduct = productRepository.findByCode(TestObjects.aProduct().getCode());
         assertThat(targetProduct.isPresent()).isEqualTo(false);
     }
-
-
-    // TODO: test get by id / code
-    // TODO: run tests on postgres
-    /*
-    https://spring.io/guides/gs/testing-web/
-     */
-
 }
