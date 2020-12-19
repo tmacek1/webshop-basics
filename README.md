@@ -1,11 +1,24 @@
 # webshop-basics
 
-## How it works:
-
 ### Prerequisites
-**1. Docker. First you need to install docker**
+
+**1. Java 11
+**2. Maven 
+
+The project uses [Maven](https://maven.apache.org/) as a build tool.
+
+To compile/build the project jar execute the following commands:
+
+```bash
+  mvn compile
+  mvn package
+```
+
+
+**3. Docker. First you need to install docker**
+
 * Download Docker [Here](https://docs.docker.com/docker-for-windows/install/). Hint: Enable Hyper-V feature on windows and restart;
-* Then open powershell and check:
+* Then open terminal and check:
 ```bash
 docker info
 ```
@@ -17,20 +30,7 @@ docker -v
 docker-compose -v
 ```
 
-## Building and deploying the application
-
-### Building the application
-
-The project uses [Maven](https://maven.apache.org/) as a build tool.
-
-To compile/build the project jar execute the following commands:
-
-```bash
-  mvn compile
-  mvn package
-```
-
-### Running the application
+## Running the application
 
 Create the docker image of the application by executing the following command:
 
