@@ -2,8 +2,8 @@
 
 ### Prerequisites
 
-**1. Java 11
-**2. Maven 
+**1. Java 11**
+**2. Maven**
 
 The project uses [Maven](https://maven.apache.org/) as a build tool.
 
