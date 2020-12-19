@@ -1,6 +1,6 @@
 package com.assignment.webshop.basics.service;
 
-import com.assignment.webshop.basics.entity.Product;
+import com.assignment.webshop.basics.model.Product;
 import com.assignment.webshop.basics.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,11 +16,6 @@ public class ProductService {
 
     @Autowired
     ProductRepository productRepository;
-
-    public List<Product> getAllProducts() {
-        List<Product> allProducts = productRepository.findAll();
-        return allProducts;
-    }
 
     public Optional<Product> getProductById(long id) {
         Optional<Product> fetchProduct = productRepository.findById(id);

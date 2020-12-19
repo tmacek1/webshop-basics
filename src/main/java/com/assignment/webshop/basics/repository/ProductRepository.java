@@ -1,6 +1,6 @@
 package com.assignment.webshop.basics.repository;
 
-import com.assignment.webshop.basics.entity.Product;
+import com.assignment.webshop.basics.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

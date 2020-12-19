@@ -23,6 +23,11 @@ public class OrderFinalizationTest {
     @Autowired
     MockMvc mockMvc;
 
+    /*
+    this test will use application.properties in /test/resources/
+     */
+
+
     @Test
     public void TestGetEndPoint() throws Exception {
 

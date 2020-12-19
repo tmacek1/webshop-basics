@@ -1,7 +1,7 @@
 package com.assignment.webshop.basics.controller;
 
-import com.assignment.webshop.basics.entity.OrderItem;
-import com.assignment.webshop.basics.model.OrderItemDTO;
+import com.assignment.webshop.basics.model.OrderItem;
+import com.assignment.webshop.basics.dto.OrderItemDTO;
 import com.assignment.webshop.basics.exception.OrderItemException;
 import com.assignment.webshop.basics.service.OrderItemService;
 import lombok.extern.slf4j.Slf4j;

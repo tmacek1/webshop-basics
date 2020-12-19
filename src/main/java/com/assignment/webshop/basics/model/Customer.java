@@ -1,4 +1,4 @@
-package com.assignment.webshop.basics.entity;
+package com.assignment.webshop.basics.model;
 
 import lombok.Data;
 

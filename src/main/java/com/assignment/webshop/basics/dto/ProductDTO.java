@@ -1,4 +1,4 @@
-package com.assignment.webshop.basics.model;
+package com.assignment.webshop.basics.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

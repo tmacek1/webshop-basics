@@ -1,6 +1,5 @@
-package com.assignment.webshop.basics.entity;
+package com.assignment.webshop.basics.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,7 +34,7 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<OrderItem> orderItems;
 
     public enum Status {

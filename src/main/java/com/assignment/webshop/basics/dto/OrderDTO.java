@@ -1,6 +1,6 @@
-package com.assignment.webshop.basics.model;
+package com.assignment.webshop.basics.dto;
 
-import com.assignment.webshop.basics.entity.Customer;
+import com.assignment.webshop.basics.model.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

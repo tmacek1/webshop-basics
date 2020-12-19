@@ -1,13 +1,12 @@
 package com.assignment.webshop.basics.service;
 
-import com.assignment.webshop.basics.entity.Order;
-import com.assignment.webshop.basics.entity.OrderItem;
-import com.assignment.webshop.basics.entity.Product;
 import com.assignment.webshop.basics.exception.OrderItemException;
+import com.assignment.webshop.basics.model.Order;
+import com.assignment.webshop.basics.model.OrderItem;
+import com.assignment.webshop.basics.model.Product;
 import com.assignment.webshop.basics.repository.OrderItemRepository;
 import com.assignment.webshop.basics.repository.OrderRepository;
 import com.assignment.webshop.basics.repository.ProductRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,6 @@ public class OrderItemService {
     @Autowired
     ProductRepository productRepository;
 
-    @Autowired
-    ModelMapper modelMapper;
 
     public OrderItem createOrderItem(OrderItem orderItem) throws OrderItemException {
 

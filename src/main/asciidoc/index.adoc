@@ -5,17 +5,42 @@
 :toc: left
 
 == Product API - GET Example (search by id)
+
 include::{snippets}/productgetbyid/http-request.adoc[]
 include::{snippets}/productgetbyid/http-response.adoc[]
 
 == Product API - GET Example (search by code)
+
 include::{snippets}/productgetbycode/http-request.adoc[]
 include::{snippets}/productgetbycode/http-response.adoc[]
 
 == Product API - POST Example
+
 include::{snippets}/productpost/http-request.adoc[]
 include::{snippets}/productpost/http-response.adoc[]
 
+== Product API - PUT Example
+
+include::{snippets}/productput/http-request.adoc[]
+include::{snippets}/productput/http-response.adoc[]
+
 == Product API - DELETE Example (delete by code)
+
 include::{snippets}/productdelete/http-request.adoc[]
 include::{snippets}/productdelete/http-response.adoc[]
+
+== Order API - GET Example
+
+include::{snippets}/ordergetbyid/http-request.adoc[]
+include::{snippets}/ordergetbyid/http-response.adoc[]
+
+== Order API - POST Example
+
+include::{snippets}/orderpost/http-request.adoc[]
+include::{snippets}/orderpost/http-response.adoc[]
+
+== Order API - Delete Example
+
+include::{snippets}/orderdelete/http-request.adoc[]
+include::{snippets}/orderdelete/http-response.adoc[]
+

@@ -1,4 +1,4 @@
-package com.assignment.webshop.basics.entity;
+package com.assignment.webshop.basics.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +35,9 @@ public class Product {
 
     @Column(name = "is_available", nullable = false)
     private boolean isAvailable;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private OrderItem orderItem;
 
     public Product() {
 

@@ -1,7 +1,7 @@
 package com.assignment.webshop.basics.controller;
 
-import com.assignment.webshop.basics.entity.Product;
-import com.assignment.webshop.basics.model.ProductDTO;
+import com.assignment.webshop.basics.model.Product;
+import com.assignment.webshop.basics.dto.ProductDTO;
 import com.assignment.webshop.basics.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,6 +29,7 @@ public class ProductController {
     public ResponseEntity<ProductDTO> readProduct(
             @PathVariable(required = false) long id) {
 
+        log.info("get product by id:{}", id);
         Optional<Product> product = productService.getProductById(id);
         if (product.isPresent()) {
             ProductDTO productDTO = modelMapper.map(product.get(), ProductDTO.class);
@@ -42,10 +41,11 @@ public class ProductController {
         }
     }
 
-    @GetMapping(value = "/products/")
+    @GetMapping(value = "/products")
     public ResponseEntity<ProductDTO> readProductByCode(
-            @RequestParam(value = "code", required = false) String code) {
+            @RequestParam(value = "code", required = true) String code) {
 
+        log.info("get product by code:{}", code);
         Optional<Product> product = productService.getProductByCode(code);
         if (product.isPresent()) {
             ProductDTO productDTO = modelMapper.map(product.get(), ProductDTO.class);
@@ -60,6 +60,7 @@ public class ProductController {
     @PostMapping(value = "/products")
     public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO) {
 
+        log.info("post new product");
         Product product = modelMapper.map(productDTO, Product.class);
         Product saveProduct = productService.createProduct(product);
         ProductDTO productResult = modelMapper.map(saveProduct, ProductDTO.class);
@@ -69,6 +70,7 @@ public class ProductController {
     @PutMapping(value = "/products")
     public ResponseEntity<ProductDTO> updateProduct(@Valid @RequestBody ProductDTO productDTO) {
 
+        log.info("put existing product");
         Product product = modelMapper.map(productDTO, Product.class);
         Product updateProduct = productService.updateProduct(product);
         ProductDTO result = modelMapper.map(updateProduct, ProductDTO.class);
@@ -77,6 +79,8 @@ public class ProductController {
 
     @DeleteMapping(value = "/products/{id}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable String id) {
+
+        log.info("delete product by id: {}", id);
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

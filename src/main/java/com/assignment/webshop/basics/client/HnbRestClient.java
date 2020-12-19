@@ -1,7 +1,7 @@
 package com.assignment.webshop.basics.client;
 
 import com.assignment.webshop.basics.config.RestClientConfig;
-import com.assignment.webshop.basics.model.HnbDTO;
+import com.assignment.webshop.basics.dto.HnbDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;

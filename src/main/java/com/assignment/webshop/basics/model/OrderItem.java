@@ -1,4 +1,4 @@
-package com.assignment.webshop.basics.entity;
+package com.assignment.webshop.basics.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,13 +19,12 @@ public class OrderItem {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @OneToOne
     @JoinColumn(name = "product_id", nullable = false)
-    @JsonIgnore
     private Product product;
 
 }

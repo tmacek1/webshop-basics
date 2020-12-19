@@ -1,11 +1,11 @@
 package com.assignment.webshop.basics.controller;
 
-import com.assignment.webshop.basics.entity.Order;
-import com.assignment.webshop.basics.entity.OrderItem;
+import com.assignment.webshop.basics.model.Order;
+import com.assignment.webshop.basics.model.OrderItem;
 import com.assignment.webshop.basics.exception.OrderException;
-import com.assignment.webshop.basics.model.CustomerDTO;
-import com.assignment.webshop.basics.model.OrderDTO;
-import com.assignment.webshop.basics.model.OrderItemJson;
+import com.assignment.webshop.basics.dto.CustomerDTO;
+import com.assignment.webshop.basics.dto.OrderDTO;
+import com.assignment.webshop.basics.dto.OrderItemJson;
 import com.assignment.webshop.basics.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,36 +65,15 @@ public class OrderController {
     }
 
     @PostMapping(value = "/orders")
-    public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody Order order) {
-
+    public ResponseEntity<OrderDTO> createOrder(@RequestParam(value = "customerId", required = true) long customerId) throws OrderException {
         log.info("post new order");
-        Optional<Order> saveOrder = orderService.createOrder(order);
-
-        if (saveOrder.isPresent()) {
-
-            OrderDTO returnOrderDTO = modelMapper.map(saveOrder.get(), OrderDTO.class);
-            CustomerDTO customerDTO = modelMapper.map(saveOrder.get().getCustomer(), CustomerDTO.class);
-            returnOrderDTO.setCustomerDTO(customerDTO);
-            return new ResponseEntity<>(returnOrderDTO, HttpStatus.CREATED);
-
-        } else {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "customer not present"
-            );
-        }
-    }
-
-    @PutMapping(value = "/orders")
-    public ResponseEntity<Order> updateOrder(@Valid @RequestBody Order order) {
-
-        log.info("put new order");
-        Optional<Order> updateOrder = orderService.updateOrder(order);
-        if (updateOrder.isPresent()) {
-            return new ResponseEntity<>(updateOrder.get(), HttpStatus.ACCEPTED);
-        }
-        throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "mandatory param not found"
-        );
+        Order order = orderService.createOrder(customerId);
+        OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+        CustomerDTO customerDTO = modelMapper.map(order.getCustomer(), CustomerDTO.class);
+        orderDTO.setCustomerDTO(customerDTO);
+        List<OrderItemJson> orderItemJsonList = new ArrayList<>();
+        orderDTO.setOrderItemJson(orderItemJsonList);
+        return new ResponseEntity<>(orderDTO, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/orders/{id}")

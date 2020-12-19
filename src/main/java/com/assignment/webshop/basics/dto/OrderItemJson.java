@@ -1,6 +1,6 @@
-package com.assignment.webshop.basics.model;
+package com.assignment.webshop.basics.dto;
 
-import com.assignment.webshop.basics.entity.Product;
+import com.assignment.webshop.basics.model.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 

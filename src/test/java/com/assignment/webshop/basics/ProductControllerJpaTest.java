@@ -1,6 +1,6 @@
 package com.assignment.webshop.basics;
 
-import com.assignment.webshop.basics.entity.Product;
+import com.assignment.webshop.basics.model.Product;
 import com.assignment.webshop.basics.repository.ProductRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.util.Optional;
