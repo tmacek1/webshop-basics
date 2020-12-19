@@ -4,9 +4,9 @@
 
 **1. Java 11** 
 
-**2. Maven** [Here](https://maven.apache.org/download.cgi)
+**2. Maven** [get](https://maven.apache.org/download.cgi)
 
-**3. Docker**  [Here](https://docs.docker.com/docker-for-windows/install/)
+**3. Docker**  [get](https://docs.docker.com/docker-for-windows/install/)
 
 ## Building the application
 
