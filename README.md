@@ -62,3 +62,10 @@ You should get a response similar to this:
 ```
   {"status":"UP"}
 ```
+
+## REST docs
+
+After application starts generated documentation should be available on:
+```bash
+  http://localhost:8080/docs/index.html
+```
