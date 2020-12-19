@@ -1,16 +1,14 @@
 package com.assignment.webshop.basics.controller;
 
-import com.assignment.webshop.basics.client.HnbRestClient;
 import com.assignment.webshop.basics.entity.Order;
 import com.assignment.webshop.basics.entity.OrderItem;
 import com.assignment.webshop.basics.exception.OrderException;
+import com.assignment.webshop.basics.model.CustomerDTO;
 import com.assignment.webshop.basics.model.OrderDTO;
 import com.assignment.webshop.basics.model.OrderItemJson;
-import com.assignment.webshop.basics.model.ProductDTO;
 import com.assignment.webshop.basics.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,28 +31,6 @@ public class OrderController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping(value = "/orders/all")
-    public ResponseEntity<List<OrderDTO>> readAllOrders() {
-
-        log.info("get all orders");
-
-        List<Order> readAll = orderService.getAllOrders();
-        List<OrderDTO> result = new ArrayList<>();
-        List<OrderItemJson> orderItemJsonList = new ArrayList<>();
-        OrderItemJson orderItemJson = new OrderItemJson();
-
-        for (Order order : readAll) {
-
-            for (OrderItem orderItem : order.getOrderItems()) {
-                orderItemJson.setProductDTO(modelMapper.map(orderItem.getProduct(), ProductDTO.class));
-                orderItemJsonList.add(orderItemJson);
-            }
-            OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-            orderDTO.setOrderItemJson(orderItemJsonList);
-            result.add(orderDTO);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
 
     @GetMapping(value = "/orders/{id}")
     public ResponseEntity<OrderDTO> readOrder(
@@ -66,16 +42,19 @@ public class OrderController {
         if (order.isPresent()) {
 
             OrderDTO orderDTO = modelMapper.map(order.get(), OrderDTO.class);
+            CustomerDTO customerDTO = modelMapper.map(order.get().getCustomer(), CustomerDTO.class);
+
             List<OrderItemJson> orderItemJsonList = new ArrayList<>();
-            OrderItemJson orderItemJson = new OrderItemJson();
 
             for (OrderItem orderItem : order.get().getOrderItems()) {
+                OrderItemJson orderItemJson = new OrderItemJson();
                 orderItemJson.setId(orderItem.getId());
                 orderItemJson.setQuantity(orderItem.getQuantity());
                 orderItemJson.setProductField(orderItem.getProduct());
                 orderItemJsonList.add(orderItemJson);
             }
 
+            orderDTO.setCustomerDTO(customerDTO);
             orderDTO.setOrderItemJson(orderItemJsonList);
             return new ResponseEntity<>(orderDTO, HttpStatus.OK);
 
@@ -87,15 +66,16 @@ public class OrderController {
     }
 
     @PostMapping(value = "/orders")
-    public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody Order order) {
 
         log.info("post new order");
-        Order order = modelMapper.map(orderDTO, Order.class);
         Optional<Order> saveOrder = orderService.createOrder(order);
 
         if (saveOrder.isPresent()) {
 
             OrderDTO returnOrderDTO = modelMapper.map(saveOrder.get(), OrderDTO.class);
+            CustomerDTO customerDTO = modelMapper.map(saveOrder.get().getCustomer(), CustomerDTO.class);
+            returnOrderDTO.setCustomerDTO(customerDTO);
             return new ResponseEntity<>(returnOrderDTO, HttpStatus.CREATED);
 
         } else {
@@ -127,12 +107,13 @@ public class OrderController {
     }
 
     @PostMapping(value = "/orders/final/{id}")
-    public void finalizeOrder(@PathVariable(required = true) long id) {
+    public ResponseEntity<OrderDTO> finalizeOrder(@PathVariable(required = true) long id) {
 
         log.info("finalize order");
 
         try {
             orderService.finalizeOrder(id);
+            return readOrder(id);
         } catch (OrderException e) {
             throw new ResponseStatusException(
                     HttpStatus.ACCEPTED, e.getMessage());

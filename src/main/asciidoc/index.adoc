@@ -12,3 +12,10 @@ include::{snippets}/productgetbyid/http-response.adoc[]
 include::{snippets}/productgetbycode/http-request.adoc[]
 include::{snippets}/productgetbycode/http-response.adoc[]
 
+== Product API - POST Example
+include::{snippets}/productpost/http-request.adoc[]
+include::{snippets}/productpost/http-response.adoc[]
+
+== Product API - DELETE Example (delete by code)
+include::{snippets}/productdelete/http-request.adoc[]
+include::{snippets}/productdelete/http-response.adoc[]

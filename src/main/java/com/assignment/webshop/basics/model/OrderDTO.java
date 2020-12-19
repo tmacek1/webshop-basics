@@ -1,6 +1,7 @@
 package com.assignment.webshop.basics.model;
 
 import com.assignment.webshop.basics.entity.Customer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -32,9 +33,13 @@ public class OrderDTO {
     @JsonProperty("total_price_eur")
     private BigDecimal totalPriceEur;
 
+    @JsonProperty("customer")
+    private CustomerDTO customerDTO;
+
+    @JsonIgnore
     private Customer customer;
 
-    @JsonProperty("customer_id")
+    //@JsonProperty("customer_id")
     private void setCustomerField(Long customer_id) {
         this.customer = new Customer();
         customer.setId(customer_id);
@@ -42,5 +47,4 @@ public class OrderDTO {
 
     @JsonProperty("order_item")
     private List<OrderItemJson> orderItemJson;
-
 }

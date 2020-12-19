@@ -42,7 +42,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping(value = "/products")
+    @GetMapping(value = "/products/")
     public ResponseEntity<ProductDTO> readProductByCode(
             @RequestParam(value = "code", required = false) String code) {
 
@@ -55,19 +55,6 @@ public class ProductController {
                     HttpStatus.NOT_FOUND, "product code not found"
             );
         }
-    }
-
-    @GetMapping(value = "products/all")
-    public ResponseEntity<List<ProductDTO>> readAllProducts() {
-
-        List<Product> readAll = productService.getAllProducts();
-        ArrayList<ProductDTO> result = new ArrayList<>();
-
-        for (Product product : readAll) {
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            result.add(productDTO);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(value = "/products")

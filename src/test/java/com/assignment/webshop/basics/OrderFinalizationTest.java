@@ -1,65 +1,45 @@
 package com.assignment.webshop.basics;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
-import org.junit.BeforeClass;
-import wiremock.org.apache.http.HttpStatus;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@AutoConfigureWireMock(port = 8089)
 public class OrderFinalizationTest {
 
-    /**
-     * 1. Create the Wiremock server and start
-     * 2. Configure the server to intercept the request
-     * 3. Stub for the request [get request]
-     * 		- Create the mock response
-     * 4. Shutdown the WireMock Server
-     *
-     * */
-//    private static final int PORT = 8080;
-//    private static final String HOST = "localhost";
-//
-//    private static WireMockServer server = new WireMockServer(PORT);
-//
-//    @BeforeClass
-//    public static void setup() {
-//        server.start();
-//
-//        ResponseDefinitionBuilder mockResponse = new ResponseDefinitionBuilder();
-//        mockResponse.withStatus(200)
-//                .withBody("[{\"BrandName\":\"Alienware\",\"" +
-//                        "Features\":{\"Feature\":" +
-//                        "[\"8th Generation Intel® Core™ i5-8300H\"," +
-//                        "\"Windows 10 Home 64-bit English\"," +
-//                        "\"NVIDIA® GeForce® GTX 1660 Ti 6GB GDDR6\"," +
-//                        "\"8GB, 2x4GB, DDR4, 2666MHz\"]},\"Id\":1,\"" +
-//                        "LaptopName\":\"Alienware M17\"}]")
-//                .withHeader("Content-Type", "application/json");
-//
-//        WireMock.configureFor(HOST, PORT); // http://localhost:8080
-//        WireMock.stubFor(
-//                WireMock.get("/laptop-bag/webapi/api/all")
-//                        .willReturn(mockResponse)
-//        );
-//    }
-//
-//    @Test
-//    public void TestGetEndPoint() throws URISyntaxException {
-//        RestAssured.given()
-//                .accept(ContentType.JSON)
-//                .when()
-//                .get(new URI("http://localhost:8080/laptop-bag/webapi/api/all"))
-//                .then()
-//                .assertThat()
-//                .statusCode(HttpStatus.SC_OK)
-//                .and()
-//                .body("[0].BrandName", equalTo("Alienware"));
-//    }
-//
-//    @AfterClass
-//    public static void teardown() {
-//        if(null != server && server.isRunning()){
-//            server.shutdownServer();
-//        }
-//    }
+    @Autowired
+    MockMvc mockMvc;
 
+    @Test
+    public void TestGetEndPoint() throws Exception {
+
+        ResponseDefinitionBuilder mockResponse = new ResponseDefinitionBuilder();
+        mockResponse.withStatus(200)
+                .withBody("[{\"Broj tečajnice\":\"246\",\"Datum primjene\":\"19.12.2020\",\"Država\":\"EMU\",\"Šifra valute\":\"978\",\"Valuta\":\"EUR\",\"Jedinica\":1,\"Kupovni za devize\":\"7,503616\",\"Srednji za devize\":\"7,526195\",\"Prodajni za devize\":\"7,548774\"}]")
+                .withHeader("Content-Type", "application/json");
+
+        WireMock.stubFor(
+                WireMock.get("/tecajn/v1?valuta=EUR")
+                        .willReturn(mockResponse)
+        );
+
+        ResultActions resultActions = this.mockMvc.perform(
+                post("/webshop/api/v1/orders/final/2"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"id\":2,\"status\":\"SUBMITTED\",\"total_price_hrk\":60.00,\"total_price_eur\":7.95,\"customer\":{\"id\":1,\"email\":\"tomislav.macek4@gmail.com\",\"first_name\":\"Tomislav\",\"last_name\":\"Macek\"},\"order_item\":[{\"id\":1,\"quantity\":1,\"product\":{\"id\":2,\"code\":\"12345\",\"name\":\"productA\",\"description\":\"productDescription\",\"price_hrk\":10.00,\"is_available\":true}},{\"id\":2,\"quantity\":1,\"product\":{\"id\":1,\"code\":\"123456\",\"name\":\"productB\",\"description\":\"productDescription\",\"price_hrk\":50.00,\"is_available\":true}}]}"));
+    }
 }

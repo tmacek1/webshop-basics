@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Rollback(false)
-public class ProductControllerTest {
+public class ProductControllerJpaTest {
 
     @Autowired
     private ProductRepository productRepository;

@@ -1,5 +1,6 @@
 package com.assignment.webshop.basics.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,10 +11,12 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "product")
 @Data
+@AllArgsConstructor
+@SequenceGenerator(name = "product_seq", initialValue = 10, allocationSize = 100)
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
     private Long id;
 
     @Column(name = "code", unique = true, length = 10, nullable = false)
@@ -33,4 +36,7 @@ public class Product {
     @Column(name = "is_available", nullable = false)
     private boolean isAvailable;
 
+    public Product() {
+
+    }
 }

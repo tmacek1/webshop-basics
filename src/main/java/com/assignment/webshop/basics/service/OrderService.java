@@ -4,7 +4,6 @@ import com.assignment.webshop.basics.client.HnbRestClient;
 import com.assignment.webshop.basics.entity.Customer;
 import com.assignment.webshop.basics.entity.Order;
 import com.assignment.webshop.basics.entity.OrderItem;
-import com.assignment.webshop.basics.entity.Product;
 import com.assignment.webshop.basics.exception.OrderException;
 import com.assignment.webshop.basics.model.HnbDTO;
 import com.assignment.webshop.basics.repository.CustomerRepository;
@@ -87,7 +86,7 @@ public class OrderService {
     }
 
 
-    public void finalizeOrder(long id) throws OrderException {
+    public Order finalizeOrder(long id) throws OrderException {
 
         Optional<Order> targetOrder = orderRepository.findById(id);
 
@@ -119,15 +118,11 @@ public class OrderService {
                     result.setTotalPriceEur(totalPriceEur);
                     result.setStatus(Order.Status.SUBMITTED);
 
-                    orderRepository.save(result);
+                    return orderRepository.save(result);
                 }
-
-            } else {
-
-                throw new OrderException("error while fetching from hnb api");
-
             }
         }
+        throw new OrderException("error finalizing order");
     }
 
     public void deleteOrder(long id) {

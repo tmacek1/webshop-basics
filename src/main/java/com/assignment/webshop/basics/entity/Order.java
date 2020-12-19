@@ -1,5 +1,6 @@
 package com.assignment.webshop.basics.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,10 +12,11 @@ import java.util.List;
 @Entity
 @Table(name = "webshop_order")
 @Data
+@SequenceGenerator(name="webshop_order_seq", initialValue=10, allocationSize=100)
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="webshop_order_seq")
     private Long id;
 
     @Enumerated(EnumType.STRING)
