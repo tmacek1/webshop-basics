@@ -59,6 +59,21 @@ You should get a response similar to this:
   {"status":"UP"}
 ```
 
+## Database ER model
+![er-model](https://user-images.githubusercontent.com/18440632/102690374-441db780-4205-11eb-9577-f5b177d1b666.PNG)
+
+### Initial data
+The default schema (postgres) and the corresponding tables are created on application start.
+The initial data is loaded into the database, import file is located at: /main/resources/import.sql
+
+```
+INSERT INTO public.customer (id, email, first_name, last_name) VALUES (1, 'tomislav.macek4@gmail.com', 'Tomislav', 'Macek');
+INSERT INTO public.product (id, code, description, is_available, "name", price_hrk) VALUES (1, '12345', 'productDescription', true, 'productA', 10.00);
+INSERT INTO public.webshop_order (id, status, total_price_eur, total_price_hrk, customer_id) VALUES(1, 'DRAFT', 0, 0, 1);
+```
+
+
+
 ## REST docs
 
 After application starts generated documentation should be available on:
