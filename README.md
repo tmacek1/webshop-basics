@@ -49,7 +49,7 @@ Run the distribution by executing the following command:
 ```
 
 This will start the API container exposing the application's port
-(set to `8080` in application.properties).
+(predefined to `8080` in application.properties).
 
 In order to test if the application is up, you can call its health endpoint:
 
