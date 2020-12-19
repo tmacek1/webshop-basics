@@ -26,11 +26,15 @@ docker-compose -v
 
 ## Building the application
 
+* Clone the repository:
+```bash
+git clone https://github.com/tmacek1/webshop-basics.git
+```
+
 To compile/build the project jar execute the following commands:
 
 ```bash
-  mvn compile
-  mvn package
+  mvn clean install
 ```
 
 ## Running the application
