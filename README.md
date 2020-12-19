@@ -63,7 +63,7 @@ You should get a response similar to this:
 ![er-model](https://user-images.githubusercontent.com/18440632/102690374-441db780-4205-11eb-9577-f5b177d1b666.PNG)
 
 ### Initial data
-The default schema (postgres) and the corresponding tables are created on application start.
+The default schema (public) and the corresponding tables are created on application start.
 The initial data is loaded into the database, import file is located at: /main/resources/import.sql
 
 ```
