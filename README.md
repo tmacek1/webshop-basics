@@ -6,7 +6,7 @@
 
 **2. Maven**
 
-**3. Docker
+**3. Docker**  
 
 * Download Docker [Here](https://docs.docker.com/docker-for-windows/install/). Hint: Enable Hyper-V feature on windows and restart;
 * Then open terminal and check:
