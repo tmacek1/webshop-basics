@@ -6,10 +6,7 @@
 
 **2. Maven**
 
-The project uses [Maven](https://maven.apache.org/) as a build tool.
-
-
-**3. Docker. First you need to install docker**
+**3. Docker
 
 * Download Docker [Here](https://docs.docker.com/docker-for-windows/install/). Hint: Enable Hyper-V feature on windows and restart;
 * Then open terminal and check:
