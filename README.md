@@ -12,12 +12,6 @@
 * Then open terminal and check:
 ```bash
 docker info
-```
-or, and you see versions docker & docker compose
-```bash
-docker -v
-```
-```bash
 docker-compose -v
 ```
 
