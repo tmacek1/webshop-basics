@@ -1,18 +1,12 @@
-# webshop-basics
+# webshop-basics rest service
 
 ### Prerequisites
 
-**1. Java 11**  
+**1. Java 11** 
+
 **2. Maven**
 
 The project uses [Maven](https://maven.apache.org/) as a build tool.
-
-To compile/build the project jar execute the following commands:
-
-```bash
-  mvn compile
-  mvn package
-```
 
 
 **3. Docker. First you need to install docker**
@@ -28,6 +22,15 @@ docker -v
 ```
 ```bash
 docker-compose -v
+```
+
+## Building the application
+
+To compile/build the project jar execute the following commands:
+
+```bash
+  mvn compile
+  mvn package
 ```
 
 ## Running the application
