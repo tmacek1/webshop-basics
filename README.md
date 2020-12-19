@@ -6,6 +6,8 @@
 
 **2. Maven**
 
+* Download Maven [Here](https://maven.apache.org/download.cgi)
+
 **3. Docker**  
 
 * Download Docker [Here](https://docs.docker.com/docker-for-windows/install/). Hint: Enable Hyper-V feature on windows and restart;
@@ -17,7 +19,7 @@ docker-compose -v
 
 ## Building the application
 
-* Clone the repository:
+Clone the repository:
 ```bash
 git clone https://github.com/tmacek1/webshop-basics.git
 ```
