@@ -4,18 +4,9 @@
 
 **1. Java 11** 
 
-**2. Maven**
+**2. Maven** [Here](https://maven.apache.org/download.cgi)
 
-* Download Maven [Here](https://maven.apache.org/download.cgi)
-
-**3. Docker**  
-
-* Download Docker [Here](https://docs.docker.com/docker-for-windows/install/). Hint: Enable Hyper-V feature on windows and restart;
-* Then open terminal and check:
-```bash
-docker info
-docker-compose -v
-```
+**3. Docker**  [Here](https://docs.docker.com/docker-for-windows/install/)
 
 ## Building the application
 
