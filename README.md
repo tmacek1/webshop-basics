@@ -1,6 +1,6 @@
 # webshop-basics rest service
 
-### Prerequisites
+## Prerequisites
 
 **1. Java 11** 
 
