@@ -440,7 +440,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_product_api_get_example_search_by_id">1. Product API - GET Example (search by id)</h2>
 <div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /webshop/api/v1/products/1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 151
 
+{
+  "id" : 1,
+  "code" : "12345",
+  "name" : "productA",
+  "description" : "productDescription",
+  "price_hrk" : 10.0,
+  "is_available" : true
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -473,7 +494,7 @@ Content-Length: 151
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-18 22:56:21 CET
+Last updated 2020-12-19 11:42:07 CET
 </div>
 </div>
 </body>

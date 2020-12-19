@@ -14,8 +14,6 @@ import java.math.BigDecimal;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -48,6 +46,16 @@ public class ProductControllerWebLayerTest {
     }
 
     @Test
+    public void testGetById() throws Exception {
+        this.mockMvc.perform(
+                get("/webshop/api/v1/products/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(objectMapper.writeValueAsString(TestObjects.aProduct())))
+                .andDo(document("productgetbyid", preprocessResponse(prettyPrint())));
+    }
+
+    @Test
     public void testGetByCode() throws Exception {
         this.mockMvc.perform(
                 get("/webshop/api/v1/products").
@@ -55,6 +63,6 @@ public class ProductControllerWebLayerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(objectMapper.writeValueAsString(TestObjects.aProduct())))
-                .andDo(document("productgetbycode", preprocessResponse(prettyPrint()))); // asciidocs in target/generated-snippets/index/
+                .andDo(document("productgetbycode", preprocessResponse(prettyPrint())));
     }
 }

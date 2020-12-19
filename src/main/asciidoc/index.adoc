@@ -5,9 +5,10 @@
 :toc: left
 
 == Product API - GET Example (search by id)
+include::{snippets}/productgetbyid/http-request.adoc[]
+include::{snippets}/productgetbyid/http-response.adoc[]
 
 == Product API - GET Example (search by code)
-
 include::{snippets}/productgetbycode/http-request.adoc[]
 include::{snippets}/productgetbycode/http-response.adoc[]
 
