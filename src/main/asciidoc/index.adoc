@@ -1,0 +1,13 @@
+= webshop basics - rest api docs
+:doctype: book
+:appendix-caption: Appx
+:sectnums:
+:toc: left
+
+== Product API - GET Example (search by id)
+
+== Product API - GET Example (search by code)
+
+include::{snippets}/productgetbycode/http-request.adoc[]
+include::{snippets}/productgetbycode/http-response.adoc[]
+
