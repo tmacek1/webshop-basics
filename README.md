@@ -1,5 +1,22 @@
 # webshop-basics
 
+## How it works:
+
+### Prerequisites
+**1. Docker. First you need to install docker**
+* Download Docker [Here](https://docs.docker.com/docker-for-windows/install/). Hint: Enable Hyper-V feature on windows and restart;
+* Then open powershell and check:
+```bash
+docker info
+```
+or, and you see versions docker & docker compose
+```bash
+docker -v
+```
+```bash
+docker-compose -v
+```
+
 ## Building and deploying the application
 
 ### Building the application
