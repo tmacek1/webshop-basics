@@ -8,7 +8,7 @@ volumes:
   postgres-data:
 services:
   app:
-    image: webshop.basics:0.0.1
+    image: webshop.basics:0.1.1
     container_name: webshopbasics
     ports:
       - "8080:8080"
