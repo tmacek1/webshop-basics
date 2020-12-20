@@ -48,7 +48,7 @@ public class ProductControllerJpaTest {
     public void testGetProductByCode() {
 
         Optional<Product> product = productRepository.findByCode(TestObjects.aProduct().getCode());
-        assertThat(product.isPresent()).isEqualTo(true);
+        assertThat(product.isPresent()).isTrue();
         assertThat(product.get().getName()).isEqualTo("testProduct");
     }
 
@@ -58,7 +58,7 @@ public class ProductControllerJpaTest {
     public void testUpdateProduct() {
 
         Optional<Product> product = productRepository.findByCode(TestObjects.aProduct().getCode());
-        assertThat(product.isPresent()).isEqualTo(true);
+        assertThat(product.isPresent()).isTrue();
         Product targetProduct = product.get();
         targetProduct.setName("updateProduct");
         productRepository.saveAndFlush(targetProduct);
@@ -71,9 +71,9 @@ public class ProductControllerJpaTest {
     public void testDeleteProduct() {
 
         Optional<Product> product = productRepository.findByCode(TestObjects.aProduct().getCode());
-        assertThat(product.isPresent()).isEqualTo(true);
+        assertThat(product.isPresent()).isTrue();
         productRepository.deleteById(product.get().getId());
         Optional<Product> targetProduct = productRepository.findByCode(TestObjects.aProduct().getCode());
-        assertThat(targetProduct.isPresent()).isEqualTo(false);
+        assertThat(targetProduct.isPresent()).isFalse();
     }
 }
