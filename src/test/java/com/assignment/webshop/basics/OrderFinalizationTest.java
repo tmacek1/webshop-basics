@@ -42,9 +42,9 @@ public class OrderFinalizationTest {
         );
 
         ResultActions resultActions = this.mockMvc.perform(
-                post("/webshop/api/v1/orders/final/2"))
+                post("/webshop/api/v1/orders/final/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"id\":2,\"status\":\"SUBMITTED\",\"total_price_hrk\":60.00,\"total_price_eur\":7.95,\"customer\":{\"id\":1,\"email\":\"tomislav.macek4@gmail.com\",\"first_name\":\"Tomislav\",\"last_name\":\"Macek\"},\"order_item\":[{\"id\":1,\"quantity\":1,\"product\":{\"id\":2,\"code\":\"12345\",\"name\":\"productA\",\"description\":\"productDescription\",\"price_hrk\":10.00,\"is_available\":true}},{\"id\":2,\"quantity\":1,\"product\":{\"id\":1,\"code\":\"123456\",\"name\":\"productB\",\"description\":\"productDescription\",\"price_hrk\":50.00,\"is_available\":true}}]}"));
+                .andExpect(content().string("{\"id\":1,\"status\":\"SUBMITTED\",\"total_price_hrk\":50.00,\"total_price_eur\":6.62,\"customer\":{\"id\":1,\"email\":\"tomislav.macek4@gmail.com\",\"first_name\":\"Tomislav\",\"last_name\":\"Macek\"},\"order_item\":[{\"id\":1,\"quantity\":1,\"product\":{\"id\":1,\"code\":\"123456\",\"name\":\"productB\",\"description\":\"productDescription\",\"price_hrk\":50.00,\"is_available\":true}}]}"));
     }
 }

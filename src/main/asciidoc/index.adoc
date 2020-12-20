@@ -44,3 +44,12 @@ include::{snippets}/orderpost/http-response.adoc[]
 include::{snippets}/orderdelete/http-request.adoc[]
 include::{snippets}/orderdelete/http-response.adoc[]
 
+== Order Item API - POST Example
+
+include::{snippets}/orderitempost/http-request.adoc[]
+include::{snippets}/orderitempost/http-response.adoc[]
+
+== Order Item API - DELETE Example
+
+include::{snippets}/orderitemdelete/http-request.adoc[]
+include::{snippets}/orderitemdelete/http-response.adoc[]

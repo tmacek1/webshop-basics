@@ -7,14 +7,17 @@ import com.assignment.webshop.basics.model.Product;
 import com.assignment.webshop.basics.repository.OrderItemRepository;
 import com.assignment.webshop.basics.repository.OrderRepository;
 import com.assignment.webshop.basics.repository.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class OrderItemService {
 
     @Autowired
@@ -54,12 +57,13 @@ public class OrderItemService {
 
         Optional<OrderItem> fetchOrderItem = orderItemRepository.findById(id);
         if (fetchOrderItem.isPresent()) {
-            orderItemRepository.deleteById(fetchOrderItem.get().getId());
+            orderItemRepository.deleteOrderItemById(fetchOrderItem.get().getId());
         } else {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "order item id not found"
             );
+
         }
     }
-
 }
+

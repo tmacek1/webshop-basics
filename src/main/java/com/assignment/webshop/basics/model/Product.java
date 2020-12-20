@@ -2,6 +2,7 @@ package com.assignment.webshop.basics.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @Table(name = "product")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @SequenceGenerator(name = "product_seq", initialValue = 10, allocationSize = 100)
 public class Product {
 
@@ -38,8 +40,4 @@ public class Product {
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private OrderItem orderItem;
-
-    public Product() {
-
-    }
 }

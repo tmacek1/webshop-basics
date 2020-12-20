@@ -39,11 +39,11 @@ public class OrderDTO {
     @JsonIgnore
     private Customer customer;
 
-    //@JsonProperty("customer_id")
-    private void setCustomerField(Long customer_id) {
-        this.customer = new Customer();
-        customer.setId(customer_id);
-    }
+//    //@JsonProperty("customer_id")
+//    private void setCustomerField(Long customer_id) {
+//        this.customer = new Customer();
+//        customer.setId(customer_id);
+//    }
 
     @JsonProperty("order_item")
     private List<OrderItemJson> orderItemJson;
